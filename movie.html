@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    img {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    .info {
+      color: #bbb;
+      margin: 8px 0;
+    }
+
+    video {
+      width: 100%;
+      max-height: 600px;
+      margin-top: 25px;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #00d9ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <a class="back" href="index.html">← Back to Movies</a>
+
+  <div id="details"></div>
+
+</div>
+
+<script src="movies.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = Number(params.get("id"));
+
+const movie = movieList.find(m => m.id === id);
+const details = document.getElementById("details");
+
+if (!movie) {
+
+  details.innerHTML = "<h2>Movie not found</h2>";
+
+} else {
+
+  details.innerHTML = `
+    <img src="${movie.poster}" alt="${movie.title}">
+
+    <h1>${movie.title}</h1>
+
+    <div class="info">
+      ⭐ ${movie.rating} |
+      ${movie.category} |
+      ${movie.year} |
+      ${movie.language}
+    </div>
+
+    <p>${movie.description}</p>
+
+    ${
+      movie.video
+      ? `
+        <video controls playsinline preload="metadata">
+          <source src="${movie.video}" type="video/mp4">
+          आपका browser video नहीं चला सकता।
+        </video>
+      `
+      : `
+        <p>इस movie का video अभी उपलब्ध नहीं है।</p>
+      `
+    }
+  `;
+}
+</script>
+
+</body>
+</html>
